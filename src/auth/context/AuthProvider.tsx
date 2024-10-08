@@ -1,38 +1,56 @@
-
-import { useReducer } from 'react';
-import {AuthContext} from './AuthContext';
-import { authReducer } from './Authreducer';
+import React, { useReducer, ReactNode } from 'react';
+import { AuthContext } from './AuthContext';
 import { types } from '../types/types';
+import { authReducer } from './Authreducer';
 
-interface Props {
-  children: any
+interface User {
+  id: string;
+  name: string;
 }
 
-const initialState = {
-  logged: false
+interface AuthState {
+  logged: boolean;
+  user: User;
 }
 
-export const AuthProvider = ({children}: Props) => {
+interface AuthProviderProps {
+  children: ReactNode;
+}
 
-  const [authState, dispatch] = useReducer(authReducer, initialState);
+const init = (): AuthState => {
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
 
-  const login = (name = '') => {
-    const action = {
-      type: types.login,
-      payload: {
-        id: 'ABC',
-        payload: name
-      }
-    }
-    dispatch(action)
-  }
+  return {
+    logged: !!user,
+    user: user,
+  };
+};
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [authState, dispatch] = useReducer(authReducer, {} as AuthState, init);
+
+  const login = (name: string = '') => {
+    const user: User = { id: 'ABC', name };
+    const action = { type: types.login, payload: user };
+
+    localStorage.setItem('user', JSON.stringify(user));
+
+    dispatch(action);
+  };
+
+  const logout = () => {
+    localStorage.removeItem('user');
+    const action = { type: types.logout };
+    dispatch(action);
+  };
 
   return (
     <AuthContext.Provider value={{
-      authState,
-      login: login
-      }}>
+      ...authState,
+      login,
+      logout,
+    }}>
       {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};
