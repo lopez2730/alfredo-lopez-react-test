@@ -1,5 +1,6 @@
 import { ReactNode, useContext } from 'react';
 import { AuthContext } from '../auth';
+import { Navigate } from 'react-router-dom';
 
 interface Props {
   children: ReactNode;
@@ -12,5 +13,5 @@ export const PrivateRoute = ({ children }: Props ) => {
 
  return (logged)
  ? children
- : <>404 Not Found</>
+ :  <Navigate to={'/login'} />
 }

@@ -1,10 +1,10 @@
-import React, { useReducer, ReactNode } from 'react';
-import { AuthContext } from './AuthContext';
+import React, { useReducer, ReactNode, useState } from 'react';
+import { AuthContext, LoginData } from './AuthContext';
 import { types } from '../types/types';
 import { authReducer } from './Authreducer';
 
 interface User {
-  id: string;
+  password: string;
   name: string;
 }
 
@@ -28,9 +28,13 @@ const init = (): AuthState => {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [authState, dispatch] = useReducer(authReducer, {} as AuthState, init);
+  const [initialData] = useState({
+    name: 'alfredo@lopez.com',
+    password: '1234567890'
+  })
 
-  const login = (name: string = '') => {
-    const user: User = { id: 'ABC', name };
+  const login = (data: LoginData) => {
+    const user: User = { password: data.password, name: data.email };
     const action = { type: types.login, payload: user };
 
     localStorage.setItem('user', JSON.stringify(user));
@@ -49,6 +53,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       ...authState,
       login,
       logout,
+      initialData,
     }}>
       {children}
     </AuthContext.Provider>

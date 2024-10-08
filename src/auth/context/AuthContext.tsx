@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
 export interface User {
-  id: string;
+  password: string;
   name: string;
 }
 
@@ -10,9 +10,15 @@ export interface AuthState {
   user?: User; 
 }
 
+export interface LoginData {
+  email: string;
+  password: string;
+}
+
 interface AuthContextProps extends AuthState {
-  login: (name: string) => void;
+  login: (data: LoginData) => void;
   logout: () => void;
+  initialData: {name: string, password: string}
 }
 
 export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);

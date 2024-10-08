@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import styles from './ProductsPage.module.scss';
 
-import { AuthContext } from '../../../auth/context/AuthContext';
+import { AuthContext } from '../../auth/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 export const ProductsPage = () => {
