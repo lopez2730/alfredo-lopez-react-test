@@ -7,10 +7,12 @@ import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import CloseIcon from '@mui/icons-material/Close';
+import { useProductsStore } from '../../store/products';
 
 
 export const LoginForm = () => {
   const { login, initialData } = useContext( AuthContext )
+  const fetchProducts = useProductsStore(state => state.fetchProducts)
 
   const [error, setError] = useState(false);
   const [errorUser, setErrorUser] = useState(false)
@@ -35,6 +37,7 @@ export const LoginForm = () => {
     if (data.email === initialData.name) {
       if( data.password === initialData.password) {
         login(data)
+        fetchProducts(30)
         navigate('/products', {
           replace: true
         })
@@ -60,7 +63,7 @@ export const LoginForm = () => {
         <Alert severity="error">{errors.email.message?.toString()}</Alert>
       )}
 
-<TextField
+      <TextField
         {...register('password')}
         sx={{ marginTop: 5 }}
         error={errors.password ? true : false}

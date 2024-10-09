@@ -44,6 +44,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('products');
     const action = { type: types.logout };
     dispatch(action);
   };

@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
-import { ProductsPage } from '../products/pages/ProductsPage';
 import { LoginPage } from '../auth/pages/LoginPage';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
+import { Menuroutes } from '../products/routes/Menuroutes';
 
 export const AppRouter = () => {
   return (
@@ -23,7 +23,7 @@ export const AppRouter = () => {
         path='/*' 
         element= {
           <PrivateRoute>
-            <ProductsPage />
+            <Menuroutes />
           </PrivateRoute>
         }
       />
