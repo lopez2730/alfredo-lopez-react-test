@@ -9,6 +9,7 @@ interface State {
   fetchProducts: (limit: number) => Promise<void>;
   addProduct: (newProduct: Product) => void;
   deleteProduct: (title: string) => void;
+  editProduct: (title: string, updatedProduct: Product) => void;
 }
 
 export const useProductsStore = create<State>()(persist((set) => {
@@ -33,7 +34,16 @@ export const useProductsStore = create<State>()(persist((set) => {
 
     deleteProduct: (title: string) => set((state) => ({
       products: state.products.filter(product => product.title !== title),
-    }))
+    })),
+
+    editProduct: (title: string, updatedProduct: Product) =>
+      set((state) => ({
+        products: state.products.map((product) =>
+          product.title === title && product.isNew
+            ? { ...product, ...updatedProduct }
+            : product
+        ),
+      })),
 
   } 
 }, {

@@ -1,20 +1,18 @@
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Button, Card, CardContent, TextField, Typography } from '@mui/material';
+import { Alert, TextField } from '@mui/material';
 import styles from './CreateProductPage.module.scss';
 import { useProductsStore } from '../../store/products';
-import { useState } from 'react';
-import { Products } from '../../types';
 import { api } from '../../services/config';
+import { CardsForm } from '../components/CardsForm';
 
 
 export const CreateProductPage = () => {
   const addProduct = useProductsStore((state) => state.addProduct);
-  const deleteTitle = useProductsStore(state => state.deleteProduct)
+  const products = useProductsStore(state => state.products);
+  console.log("🚀 ~ CreateProductPage ~ products:", products)
 
-  const [newProducts, setNewProducts] = useState<Products[]>([])
-  console.log("🚀 ~ CreateProductPage ~ newProducts:", newProducts)
 
 
   const schema = yup.object().shape({
@@ -39,8 +37,9 @@ export const CreateProductPage = () => {
       price: data.price,
       description: data.description,
       category: data.category,
+      isNew: true,
     };
-    setNewProducts([ newProduct, ...newProducts ])
+    // setNewProducts([ newProduct, ...newProducts ])
     addProduct(newProduct);
     reset()
     try {
@@ -51,32 +50,15 @@ export const CreateProductPage = () => {
 
   }
 
-  const deleteProduct = (title: string) => {
-    deleteTitle(title)
-    setNewProducts(newProducts.filter((product) => product.title !== title));
-  }
+
 
   return (
     <div className={styles.cont}>
       <div className={styles.cardsContainer}>
-        {newProducts.map(p => (
+        {products.map(p => (
+          p.isNew &&
           <div className={styles.cardContainer} key={p.price}>
-            <Card sx={{ maxWidth: 345 }}>
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {p.title}
-                  {' '}
-                  ${p.price}
-                </Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {p.description}
-                </Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {p.category}
-                </Typography>
-              </CardContent>
-              <Button sx={{color: 'red'}} onClick={() => deleteProduct(p.title)}>delete</Button>
-            </Card>
+           <CardsForm data={p} />
           </div>
         ))}
       </div>

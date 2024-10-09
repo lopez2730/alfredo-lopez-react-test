@@ -1,4 +1,5 @@
 export interface Products {
+  isNew?: boolean;
   id?: number;
   title: string;
   price: number;
@@ -16,6 +17,7 @@ export interface Product {
   description: string;
   category: string;
   image?: string;
+  isNew?: boolean;
   rating?: {
     rate: number;
     count: number;
