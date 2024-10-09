@@ -11,8 +11,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 
 export const LoginForm = () => {
-  const { login, initialData } = useContext( AuthContext )
-  const fetchProducts = useProductsStore(state => state.fetchProducts)
+  const { login, initialData } = useContext( AuthContext );
+  const fetchProducts = useProductsStore(state => state.fetchProducts);
 
   const [error, setError] = useState(false);
   const [errorUser, setErrorUser] = useState(false)

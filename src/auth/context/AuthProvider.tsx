@@ -28,10 +28,13 @@ const init = (): AuthState => {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [authState, dispatch] = useReducer(authReducer, {} as AuthState, init);
-  const [initialData] = useState({
+  const [initialData, setInitialData] = useState({
     name: 'alfredo@lopez.com',
     password: '1234567890'
   })
+
+  console.log("🚀 ~ initialData:", initialData)
+
 
   const login = (data: LoginData) => {
     const user: User = { password: data.password, name: data.email };
@@ -55,6 +58,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       login,
       logout,
       initialData,
+      setInitialData,
     }}>
       {children}
     </AuthContext.Provider>

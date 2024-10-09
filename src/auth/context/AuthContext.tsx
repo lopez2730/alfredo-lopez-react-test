@@ -19,6 +19,10 @@ interface AuthContextProps extends AuthState {
   login: (data: LoginData) => void;
   logout: () => void;
   initialData: {name: string, password: string}
+  setInitialData: React.Dispatch<React.SetStateAction<{
+    name: string;
+    password: string;
+  }>>
 }
 
 export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
