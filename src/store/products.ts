@@ -8,7 +8,7 @@ interface State {
   fetchProducts: (limit: number) => Promise<void>
 }
 
-export const useProductsStore = create<State>()(persist((set, get) => {
+export const useProductsStore = create<State>()(persist((set) => {
   return {
     products: [],
     currentPage: 1,

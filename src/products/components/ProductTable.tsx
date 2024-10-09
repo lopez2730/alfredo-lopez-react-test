@@ -1,9 +1,10 @@
-import { Box, Button, Table, TableBody, TableContainer, TableHead, TableRow, TableSortLabel } from '@mui/material';
+import { Box, Button, Table, TableBody, TableContainer, TableHead, TableRow, TableSortLabel, TextField } from '@mui/material';
 import { visuallyHidden } from "@mui/utils";
 import { useProductsStore } from '../../store/products';
 import TableCell from '@mui/material/TableCell';
 import { Products } from '../../types';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 
@@ -92,6 +93,8 @@ export const ProductTable = () => {
   const [page, setPage] = useState(0);
   const [orderBy, setOrderBy] = useState<keyof Products>("price");
   const products = useProductsStore(state => state.products)
+  const [productSearch, setProductSearch] = useState('')
+
   console.log("🚀 ~ ProductTable ~ products:", products)
 
 
@@ -109,8 +112,15 @@ export const ProductTable = () => {
     setOrderBy(property);
   }
 
+  const filteredProducts = products.filter((product) => {
+    return (
+      product.title.toLowerCase().includes(productSearch.toLowerCase()) ||
+      product.category.toLowerCase().includes(productSearch.toLowerCase()) ||
+      product.description.toLowerCase().includes(productSearch.toLowerCase())
+    );
+  })
   
-  const sortedProducts = [...products].sort((a, b) => {
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (orderBy === "price") {
       return order === "asc" ? a.price - b.price : b.price - a.price;
     }
@@ -124,12 +134,17 @@ export const ProductTable = () => {
 
   const paginatedProducts = sortedProducts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
-  const totalPages = Math.ceil(products.length / rowsPerPage);
+  const totalPages = Math.ceil(filteredProducts.length / rowsPerPage);
   const visiblePages = [];
 
   for (let i = Math.max(0, page - 2); i <= Math.min(totalPages - 1, page + 2); i++) {
     visiblePages.push(i);
   }
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setProductSearch(event.target.value);
+  }
+
   return (
     <Box
       sx={{
@@ -137,13 +152,14 @@ export const ProductTable = () => {
         marginBottom: 10
       }}
     >
+      <TextField label='buscar producto' onChange={handleSearch} />
     <TableContainer>
       <Table>
         <EnhancedTableHead
           order={order}
           orderBy={orderBy}
           onRequestSort={handleRequestSort}
-          rowCount={products.length}
+          rowCount={filteredProducts.length}
         />
         <TableBody>
           {
@@ -154,7 +170,7 @@ export const ProductTable = () => {
                   <TableCell>{row.category}</TableCell>
                   <TableCell>{row.description}</TableCell>
                   <TableCell>{row.price}</TableCell>
-                  <TableCell><Button>Ver más</Button></TableCell>
+                  <TableCell><Link style={{textDecoration: 'none', color: 'inherit'}} to={`/products/${row.id}`}>Ver más</Link></TableCell>
                 </TableRow>
               )
             })
