@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import styles from './ProductsPage.module.scss';
 import { AuthContext } from '../../auth/context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ProductTable } from '../components/ProductTable';
 
 export const ProductsPage = () => {
@@ -18,6 +18,8 @@ export const ProductsPage = () => {
   return (
     <div  className={styles.container}>
       <h1 className={styles.h1}>{user?.name}</h1>
+      <Link to={'/users'}>users</Link>
+      <Link to={'/create-product'}>create product</Link>
       <ProductTable />
 
       <div className={styles.buttonContainer}>
