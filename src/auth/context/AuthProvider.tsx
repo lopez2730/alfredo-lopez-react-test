@@ -1,15 +1,18 @@
-import React, { useReducer, ReactNode, useState, useEffect } from 'react';
+import React, { useReducer, ReactNode, useState } from 'react';
 import { AuthContext, LoginData } from './AuthContext';
 import { types } from '../types/types';
 import { authReducer } from './Authreducer';
+
 interface User {
   password: string;
   name: string;
 }
+
 interface AuthState {
   logged: boolean;
   user: User;
 }
+
 interface AuthProviderProps {
   children: ReactNode;
 }
@@ -19,7 +22,7 @@ const init = (): AuthState => {
 
   return {
     logged: !!user,
-    user: user || { password: '', name: '' }, 
+    user: user,
   };
 };
 
@@ -28,26 +31,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [initialData, setInitialData] = useState({
     name: 'alfredo@lopez.com',
     password: '1234567890'
-  });
-
-  useEffect(() => {
-    if (initialData.name && initialData.password) {
-      const user: User = { password: initialData.password, name: initialData.name };
-      localStorage.setItem('user', JSON.stringify(user)); 
-      dispatch({ type: types.login, payload: user }); 
-    }
-  }, [initialData, dispatch]);
+  })
 
   const login = (data: LoginData) => {
     const user: User = { password: data.password, name: data.email };
     const action = { type: types.login, payload: user };
 
-    localStorage.setItem('user', JSON.stringify(user)); 
+    localStorage.setItem('user', JSON.stringify(user));
 
-    dispatch(action); 
+    dispatch(action);
   };
 
   const logout = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('products');
     const action = { type: types.logout };
     dispatch(action);
   };

@@ -6,12 +6,7 @@ interface Props {
   children: ReactNode;
 }
 
-
-export const PrivateRoute = ({ children }: Props ) => {
-
+export const PrivateRoute = ({ children }: Props) => {
   const { logged } = useContext(AuthContext);
-
- return (logged)
- ? children
- :  <Navigate to={'/login'} />
-}
+  return logged ? children : <Navigate to="/login" />;
+};
