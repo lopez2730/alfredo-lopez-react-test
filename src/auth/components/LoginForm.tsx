@@ -1,4 +1,6 @@
 import { useContext, useState } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
+import { useProductsStore } from '../../store/products';
 import { AuthContext } from '../context';
 import { useNavigate } from 'react-router-dom';
 import styles from './LoginForm.module.scss';
@@ -6,8 +8,6 @@ import { Alert, Button, Collapse, IconButton, TextField } from '@mui/material';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import CloseIcon from '@mui/icons-material/Close';
-import { useProductsStore } from '../../store/products';
 
 
 export const LoginForm = () => {

@@ -10,8 +10,7 @@ interface Props {
 export const PublicRoute = ({ children }: Props ) => {
 
   const { logged } = useContext(AuthContext);
-
- return (!logged)
- ? children
- : <Navigate to='/products'/>
+  return (!logged)
+  ? children
+  : <Navigate to='/'/>
 }

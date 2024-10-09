@@ -11,7 +11,6 @@ export const ProductDataPage = () => {
   const productId = id && parseInt(id, 10) 
 
   const dataProduct = products.filter(p => p.id === productId);
-  console.log("🚀 ~ ProductDataPage ~ dataProduct:", dataProduct)
 
 
   return (
@@ -30,7 +29,7 @@ export const ProductDataPage = () => {
             {' '}
             ${dataProduct[0].price}
           </Typography>
-          <Rating readOnly name="half-rating" defaultValue={dataProduct[0].rating.rate} precision={0.5} />
+          <Rating readOnly name="half-rating" defaultValue={dataProduct[0].rating?.rate} precision={0.5} />
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             {dataProduct[0].description}
           </Typography>

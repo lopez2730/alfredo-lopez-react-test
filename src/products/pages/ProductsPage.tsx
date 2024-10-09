@@ -18,8 +18,10 @@ export const ProductsPage = () => {
   return (
     <div  className={styles.container}>
       <h1 className={styles.h1}>{user?.name}</h1>
-      <Link to={'/users'}>users</Link>
-      <Link to={'/create-product'}>create product</Link>
+      <div className={styles.buttonsNavigation}>
+        <Link className={styles.linkButton} style={{textDecoration: 'none'}} to={'/users'}>users</Link>
+        <Link className={styles.linkButton} style={{textDecoration: 'none'}} to={'/products/create'}>create product</Link>
+      </div>
       <ProductTable />
 
       <div className={styles.buttonContainer}>

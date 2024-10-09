@@ -1,0 +1,54 @@
+
+
+.cont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.newProductsContianer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  width: 50%;
+  text-align: -webkit-center;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+
+}
+
+.loginButton {
+  width: 100%;
+  padding: 0.75rem;
+  background-color:  #3498db;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 50px;
+  &:hover {
+    background-color: #2e86c1;
+  }
+}
